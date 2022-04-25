@@ -1,0 +1,43 @@
+//给你三个整数数组 nums1、nums2 和 nums3 ，请你构造并返回一个 与这三个数组都不同的 数组，且由 至少 在 两个 数组中出现的所有值组成。数组中的元素可以按 任意 顺序排列。
+
+//方法一
+class Solution {
+public:
+    vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) {
+        vector<int>ans;
+        for(int i=1;i<101;++i){
+            int count=0;
+            if(find(nums1.begin(),nums1.end(),i)!=nums1.end()) count++;
+            if(find(nums2.begin(),nums2.end(),i)!=nums2.end()) count++;
+            if(find(nums3.begin(),nums3.end(),i)!=nums3.end()) count++;
+            if(count>=2) ans.emplace_back(i);
+        }
+        return ans;
+    }
+};
+
+//方法二
+class Solution {
+public:
+    vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) {
+        vector<int>cnt1(101);
+        vector<int>cnt2(101);
+        vector<int>cnt3(101);
+        vector<int>ans;
+        for(int num:nums1){
+            cnt1[num]++;
+        }
+        for(int num:nums2){
+            cnt2[num]++;
+        }
+        for(int num:nums3){
+            cnt3[num]++;
+        }
+        for(int i=0;i<=100;++i){
+            if(cnt1[i]&&cnt2[i]||cnt1[i]&&cnt3[i]||cnt2[i]&&cnt3[i]){
+                ans.emplace_back(i);
+            }
+        }
+        return ans;
+    }
+};
