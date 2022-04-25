@@ -1,0 +1,20 @@
+//给你一个非空数组，返回此数组中 第三大的数 。如果不存在，则返回数组中最大的数。
+
+//注意是第三大，不是第三个最大的，要去除重复元素
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end(),greater());
+        for(int i=1,dif=1;i<n;++i){
+            if(nums[i]!=nums[i-1]){
+                dif++;
+            }
+            if(dif==3){
+                return nums[i];
+            }
+        }
+        return nums[0];
+
+    }
+};
