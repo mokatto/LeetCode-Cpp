@@ -1,6 +1,7 @@
 //给你一个非空数组，返回此数组中 第三大的数 。如果不存在，则返回数组中最大的数。
-
 //注意是第三大，不是第三个最大的，要去除重复元素
+
+//方法一：排序
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {
@@ -16,5 +17,20 @@ public:
         }
         return nums[0];
 
+    }
+};
+
+//方法二：利用set有序且去除重复元素的特性
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        set<int>set;
+        for(int num:nums){
+            set.insert(num);
+            if(set.size()>3){
+                set.erase(set.begin());
+            }
+        }
+        return set.size()==3?*set.begin():*set.rbegin();
     }
 };
