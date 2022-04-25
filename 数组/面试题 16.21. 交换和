@@ -1,0 +1,32 @@
+//给定两个整数数组，请交换一对数值（每个数组中取一个数值），使得两个数组所有元素的和相等。
+//返回一个数组，第一个元素是第一个数组中要交换的元素，第二个元素是第二个数组中要交换的元素。若有多个答案，返回任意一个均可。若无满足条件的数值，返回空数组。
+
+//利用set查找快的特性，用vector会超时
+class Solution {
+public:
+    vector<int> findSwapValues(vector<int>& array1, vector<int>& array2) {
+        int sum1=0,sum2=0;
+        set<int>set1;
+        set<int>set2;
+        for(int num:array1){
+            sum1+=num;
+            set1.insert(num);
+        }
+        for(int num:array2){
+            sum2+=num;
+            set2.insert(num);
+        }
+        int dif=sum1-sum2;
+        vector<int>ans;
+        if(dif%2!=0) return ans;
+        for(int a:set1){
+            int b=a-dif/2;
+            if(set2.find(b)!=set2.end()){
+                ans.emplace_back(a);
+                ans.emplace_back(b);
+                break;
+            }
+        }
+        return ans;
+    }
+};
