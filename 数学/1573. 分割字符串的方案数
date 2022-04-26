@@ -1,0 +1,34 @@
+//给你一个二进制串 s  （一个只包含 0 和 1 的字符串），我们可以将 s 分割成 3 个 非空 字符串 s1, s2, s3 （s1 + s2 + s3 = s）
+//请你返回分割 s 的方案数，满足 s1，s2 和 s3 中字符 '1' 的数目相同。
+//由于答案可能很大，请将它对 10^9 + 7 取余后返回。
+
+//分情况讨论，1的个数cnt需要能被3整数
+//cnt%3!=0 return0；
+//cnt==0，有n-1个可分割位置，选两个，用排列组合公式
+//其余情况，以1为分割线，计算开头结尾两个1之间的可分割位置，相乘
+class Solution {
+public:
+    int numWays(string s) {
+        int cnt=0;
+        int n=s.size();
+        vector<int>ones;
+        for(int i=0;i<n;++i){
+            if(s[i]=='1'){
+                cnt++;
+                ones.emplace_back(i);
+            }
+        }
+        if(cnt%3!=0) return 0;
+        if(cnt==0){
+            long long ways=(long long)(n-1)*(n-2)/2;
+            return ways%1000000007;
+        }
+        int index1=cnt/3;
+        int index2=2*cnt/3;
+        int count1=ones[index1]-ones[index1-1];
+        int count2=ones[index2]-ones[index2-1];
+        long long ways=(long long)count1*count2;
+        return ways%1000000007;
+
+    }
+};
